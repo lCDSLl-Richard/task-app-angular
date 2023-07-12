@@ -11,11 +11,8 @@ export class AppComponent {
   tasks: Task[] = [];
   title = 'task-app';
   counter = 0;
-  private service: TasksService;
 
-  constructor(tasksService: TasksService) {
-    this.service = tasksService;
-  }
+  constructor(private readonly service: TasksService) {}
 
   ngOnInit(): void {
     this.tasks = this.service.getTasks();

@@ -10,16 +10,13 @@ import { ErrorStateMatcher } from '@angular/material/core';
   styleUrls: ['./task-form.component.css'],
 })
 export class TaskFormComponent {
-  private service: TasksService;
   matcher = new ErrorStateMatcher();
   taskForm = new FormGroup({
     title: new FormControl('', Validators.required),
     description: new FormControl(''),
   });
 
-  constructor(tasksService: TasksService) {
-    this.service = tasksService;
-  }
+  constructor(private readonly service: TasksService) {}
 
   addTask() {
     const title = this.taskForm.get('title')?.value ?? '';

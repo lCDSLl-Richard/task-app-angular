@@ -7,14 +7,11 @@ import { TasksService } from '../services/tasks.service';
   styleUrls: ['./task.component.css'],
 })
 export class TaskComponent {
-  @Input() title: string = '';
+  @Input() title = '';
   @Input() description = '';
   @Input() completed = false;
-  private service: TasksService;
 
-  constructor(tasksService: TasksService) {
-    this.service = tasksService;
-  }
+  constructor(private readonly service: TasksService) {}
 
   onComplete() {
     this.service.changeCompletedTask(this.title, !this.completed);
