@@ -6,14 +6,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class TasksService {
-  private snackBar;
-  private snackBarDuration = 2000;
+  private readonly snackBarDuration = 2000;
 
   private currentTasks: Task[] = [];
 
-  constructor(private _snackBar: MatSnackBar) {
-    this.snackBar = _snackBar;
-  }
+  constructor(private readonly snackBar: MatSnackBar) {}
 
   addTask(task: Task): void {
     this.currentTasks.push(task);
@@ -21,10 +18,12 @@ export class TasksService {
     this.snackBar.open('Task added', 'Close', {
       duration: this.snackBarDuration,
     });
+    this.sortTasks();
   }
 
   getTasks(): Task[] {
     this.currentTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    this.sortTasks();
     return this.currentTasks;
   }
 
@@ -35,6 +34,7 @@ export class TasksService {
     this.snackBar.open('Task deleted', 'Close', {
       duration: this.snackBarDuration,
     });
+    this.sortTasks();
   }
 
   changeCompletedTask(title: string, newState: boolean): void {
@@ -50,5 +50,13 @@ export class TasksService {
     this.snackBar.open(`Task ${newState ? 'completed' : 'pending'}`, 'Close', {
       duration: this.snackBarDuration,
     });
+    this.sortTasks();
+  }
+
+  private sortTasks(): void {
+    this.currentTasks.sort((a, b) => a.title.localeCompare(b.title));
+    this.currentTasks.sort((a, b) =>
+      a.completed === b.completed ? 0 : a.completed ? -1 : 1
+    );
   }
 }
