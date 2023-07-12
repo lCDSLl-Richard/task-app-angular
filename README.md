@@ -1,6 +1,6 @@
 # Task App
 
-A simple Task App tracking tool developed in angular.
+A simple Task tracking tool developed in angular.
 
 ## Core Functionality
 
